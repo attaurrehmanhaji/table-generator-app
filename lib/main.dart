@@ -79,23 +79,31 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Row(
           children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                print("Clicked on container: ");
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ReviewScreen(),
+            Container(
+              decoration: BoxDecoration(color: Colors.red),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      print("Clicked on container: ");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ReviewScreen(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 100,
+                      decoration: BoxDecoration(color: Colors.amber),
+                      child: Center(
+                        child: Text('Give review'),
+                      ),
+                    ),
                   ),
-                );
-              },
-              child: Container(
-                height: 50,
-                width: 100,
-                decoration: BoxDecoration(color: Colors.amber),
-                child: Center(
-                  child: Text('Give review'),
-                ),
+                ],
               ),
             ),
             Expanded(
