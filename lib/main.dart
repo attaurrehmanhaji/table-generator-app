@@ -1,7 +1,9 @@
+import '../showTable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
+import 'package:table_app/screens/review_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,6 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -42,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  int selected = -1;
+  int selected = 0, i = 0;
   List num = [
     1,
     2,
@@ -76,6 +79,25 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Row(
           children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                print("Clicked on container: ");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ReviewScreen(),
+                  ),
+                );
+              },
+              child: Container(
+                height: 50,
+                width: 100,
+                decoration: BoxDecoration(color: Colors.amber),
+                child: Center(
+                  child: Text('Give review'),
+                ),
+              ),
+            ),
             Expanded(
               child: ListView.builder(
                   // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -90,17 +112,37 @@ class _MyHomePageState extends State<MyHomePage> {
                         setState(() {
                           table.clear();
                           selected = -1;
-                          for (int i = 1; i <= num.length; i++) {
+                          for (int i = 1; i <= 10; i++) {
                             print("${num[index]} X $i = ${num[index] * i}");
+
                             selected = num[index];
                             table.add(num[index] * i);
+                            // i = (num[index]);
                             // selected < 10 ? table.add(num[index] * i) : "";
                           }
                         });
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => Tableshow(
+                        //       t: selected.toString(),
+                        //       i: index,
+                        //       // i: num[index + 1],
+                        //       len: table.length,
+                        //       r: {table[index]},
+                        //     ),
+                        //   ),
+                        // );
                       },
                       child: Container(
-                        margin: EdgeInsets.only(top: 5, left: 30, right: 30),
+                        // margin: EdgeInsets.symmetric(horizontal: 50),
+                        margin: EdgeInsets.only(bottom: 10),
+                        // padding: EdgeInsets.all(10),
+                        height: 50,
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10)),
                           color: Colors.amber,
                         ),
                         child: Center(
@@ -116,19 +158,26 @@ class _MyHomePageState extends State<MyHomePage> {
               child: ListView.builder(
                 itemCount: table.length,
                 itemBuilder: (BuildContext context, index) {
-                  return Container(
-                    margin: EdgeInsets.only(top: 5, left: 30, right: 30),
+                  return Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 5, left: 30, right: 30),
+                        // height: 50,
 
-                    // height: 50,
-
-                    // child: Text("${table[2]}"),
-                    child: Text(
-                      "$selected x ${index + 1} = ${table[index]}",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    decoration: BoxDecoration(
-                      color: selected == 1 ? Colors.amber : Colors.teal,
-                    ),
+                        // child: Text("${table[2]}"),
+                        child: Center(
+                          child: Text(
+                            "$selected x ${index + 1} = ${table[index]}",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          color: selected == 1 ? Colors.amber : Colors.teal,
+                        ),
+                      ),
+                    ],
                   );
                 },
               ),
